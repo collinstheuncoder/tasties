@@ -1,0 +1,8 @@
+/* Set font color based on background color */
+@function color($bgColor) {
+  @if (lightness($bgColor) > 50) {
+    @return $bg-color;
+  } @else {
+    @return $font-color;
+  }
+}

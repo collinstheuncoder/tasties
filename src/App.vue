@@ -1,56 +1,90 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld />
-    </v-content>
+    <app-navbar />
+    <app-main />
+    <app-footer />
+    <v-tooltip left>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          color="#04b4d4"
+          dark
+          fab
+          fixed
+          right
+          class="add-recipe"
+          @click="addRecipe"
+          v-on="on"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </template>
+      <span>Add Recipe</span>
+    </v-tooltip>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import AppNavbar from "./components/layout/Navbar";
+import AppMain from "./components/layout/Main";
+import AppFooter from "./components/layout/Footer";
 
 export default {
-  name: "App",
+  name: "tasties",
 
   components: {
-    HelloWorld
+    AppNavbar,
+    AppMain,
+    AppFooter
   },
 
-  data: () => ({
-    //
-  })
+  data() {
+    return {
+      routeName: this.$route.name,
+      isAuthenticated: false
+    };
+  },
+
+  watch: {
+    "$route.name": {
+      handler(routeName) {
+        this.routeName = routeName;
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+
+  methods: {
+    addRecipe() {
+      if (!this.isAuthenticated) {
+        this.$router.push("/accounts/login");
+      } else {
+        this.$router.push("/recipes/new");
+      }
+    }
+  }
 };
 </script>
+
+<style lang="scss">
+@import "./scss/style";
+
+#app {
+  font-family: $primary-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $body-color;
+  letter-spacing: 1px;
+}
+
+html {
+  overflow: hidden;
+}
+
+.add-recipe {
+  top: 89vh;
+}
+</style>
