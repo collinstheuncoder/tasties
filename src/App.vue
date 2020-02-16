@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <app-navbar />
+    <app-navbar v-show="!displayNavAndFooter" />
     <app-main />
-    <app-footer />
+    <app-footer v-show="!displayNavAndFooter" />
     <v-tooltip left>
       <template v-slot:activator="{ on }">
         <v-btn
@@ -11,6 +11,7 @@
           fab
           fixed
           right
+          v-show="!displayNavAndFooter"
           class="add-recipe"
           @click="addRecipe"
           v-on="on"
@@ -51,6 +52,12 @@ export default {
       },
       deep: true,
       immediate: true
+    }
+  },
+
+  computed: {
+    displayNavAndFooter() {
+      return this.routeName === "register" || this.routeName === "login";
     }
   },
 

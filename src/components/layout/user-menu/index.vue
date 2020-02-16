@@ -56,18 +56,18 @@
       <v-list-item
         v-show="!isAuthenticated"
         class="menu-item"
-        @click="navigateTo('/accounts/register')"
+        @click="navigateTo('/auth/register')"
       >
-        <router-link to="/accounts/register" class="menu-link"
+        <router-link to="/auth/register" class="menu-link"
           >Register</router-link
         >
       </v-list-item>
       <v-list-item
         v-show="!isAuthenticated"
         class="menu-item"
-        @click="navigateTo('/accounts/login')"
+        @click="navigateTo('/auth/login')"
       >
-        <router-link to="/accounts/login" class="menu-link">Login</router-link>
+        <router-link to="/auth/login" class="menu-link">Login</router-link>
       </v-list-item>
       <v-list-item
         v-show="isAuthenticated"
