@@ -9,6 +9,9 @@
           class="info-image"
         />
         <p class="info-msg">Log in to see your favorited and saved recipes</p>
+        <p class="info-back info-back--large">
+          Back to <router-link to="/" class="info-link">home</router-link>
+        </p>
       </div>
       <div class="login-card-form">
         <login-form />
@@ -23,6 +26,9 @@
       >
         here</router-link
       >
+    </p>
+    <p class="info-back info-back--mobile">
+      Back to <router-link to="/" class="info-link">home</router-link>
     </p>
   </div>
 </template>
@@ -99,10 +105,37 @@ export default {
     }
   }
 
-  &-msg {
+  &-msg,
+  &-back {
     margin: 0;
     font-size: 0.85rem;
     text-align: center;
+  }
+
+  &-back {
+    &--mobile {
+      color: $white;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+
+      @include mediumDevices {
+        display: none;
+      }
+    }
+
+    &--large {
+      display: none;
+
+      @include mediumDevices {
+        display: block;
+        margin-top: 1.75rem;
+      }
+    }
+  }
+
+  &-link {
+    color: $app-color;
+    text-decoration: none;
   }
 }
 
@@ -114,6 +147,7 @@ export default {
   &-msg {
     color: $white;
     margin-top: 1rem;
+    margin-bottom: 0;
   }
 
   &-link {

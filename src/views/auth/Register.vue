@@ -9,6 +9,9 @@
           class="info-image"
         />
         <p class="info-msg">Join to be able to add your favorite recipes</p>
+        <p class="info-back info-back--large">
+          Back to <router-link to="/" class="info-link">home</router-link>
+        </p>
       </div>
       <register-form />
     </v-card>
@@ -16,6 +19,9 @@
       Already a member? Log in<router-link to="/auth/login" class="login-link">
         here</router-link
       >
+    </p>
+    <p class="info-back info-back--mobile">
+      Back to <router-link to="/" class="info-link">home</router-link>
     </p>
   </div>
 </template>
@@ -86,10 +92,37 @@ export default {
     }
   }
 
-  &-msg {
+  &-msg,
+  &-back {
     margin: 0;
     font-size: 0.85rem;
     text-align: center;
+  }
+
+  &-back {
+    &--mobile {
+      color: $white;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+
+      @include mediumDevices {
+        display: none;
+      }
+    }
+
+    &--large {
+      display: none;
+
+      @include mediumDevices {
+        display: block;
+        margin-top: 4rem;
+      }
+    }
+  }
+
+  &-link {
+    color: $app-color;
+    text-decoration: none;
   }
 }
 
@@ -97,6 +130,7 @@ export default {
   &-msg {
     color: $white;
     margin-top: 1rem;
+    margin-bottom: 0;
   }
 
   &-link {
