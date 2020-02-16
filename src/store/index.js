@@ -1,11 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
+//import createPersistedState from "vuex-persistedstate";
+
+import auth from "./auth";
+import users from "./users";
+import recipes from "./recipes";
+import shared from "./shared";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {}
+const store = new Vuex.Store({
+  modules: {
+    auth,
+    users,
+    recipes,
+    shared
+  }
+  //  plugins: [createPersistedState()]
 });
+
+export default store;
