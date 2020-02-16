@@ -31,23 +31,28 @@
             </v-icon>
           </div>
         </template>
-        <user-menu />
+        <user-menu
+          :is-authenticated="isAuthenticated"
+          :current-user="currentUser"
+        />
       </v-menu>
     </div>
   </header>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import UserMenu from "./user-menu";
 
 export default {
   name: "app-navbar",
 
-  data() {
-    return {
-      isAuthenticated: false,
-      currentUser: null
-    };
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated",
+      currentUser: "users/currentUser"
+    })
   },
 
   components: {

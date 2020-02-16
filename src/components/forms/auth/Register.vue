@@ -21,6 +21,7 @@
 
     <v-text-field
       v-model.trim="email"
+      type="email"
       :error-messages="emailErrors"
       label="E-mail"
       required
@@ -30,28 +31,44 @@
 
     <v-text-field
       v-model.trim="password"
+      :type="showPassword ? 'text' : 'password'"
+      :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
       :error-messages="passwordErrors"
       :counter="128"
       label="Password"
       required
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
+      @click:append="showPassword = !showPassword"
     ></v-text-field>
 
     <v-text-field
       v-model.trim="confirmPassword"
+      :type="showConfirmPassword ? 'text' : 'password'"
+      :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
       :error-messages="confirmPasswordErrors"
       label="Confirm Password"
       required
       @input="$v.confirmPassword.$touch()"
       @blur="$v.confirmPassword.$touch()"
+      @click:append="showConfirmPassword = !showConfirmPassword"
     ></v-text-field>
 
-    <v-btn type="submit" class="mr-4 button" color="#04b4d4">submit</v-btn>
+    <p v-show="error" class="error-message">{{ error }}</p>
+
+    <v-btn
+      type="submit"
+      class="mr-4 button"
+      color="#04b4d4"
+      :disabled="isLoading"
+      :loading="isLoading"
+      >register</v-btn
+    >
   </form>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import {
   required,
@@ -95,7 +112,11 @@ export default {
       username: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      showPassword: false,
+      showConfirmPassword: false,
+      error: null,
+      isLoading: false
     };
   },
 
@@ -158,10 +179,9 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$v.$touch();
-    },
-    clear() {
+    ...mapActions({ register: "auth/register" }),
+
+    clearForm() {
       this.$v.$reset();
 
       this.fullname = "";
@@ -169,6 +189,28 @@ export default {
       this.email = "";
       this.password = "";
       this.confirmPassword = "";
+    },
+
+    async submitForm() {
+      this.$v.$touch();
+      this.isLoading = true;
+
+      try {
+        await this.register({
+          fullname: this.fullname,
+          username: this.username,
+          email: this.email,
+          password: this.password,
+          router: this.$router
+        });
+
+        this.clearForm();
+        this.isLoading = false;
+        this.error = null;
+      } catch (error) {
+        this.error = error;
+        this.isLoading = false;
+      }
     }
   }
 };
@@ -186,5 +228,12 @@ export default {
   margin: 0;
   width: 100%;
   color: $white;
+}
+
+.error-message {
+  font-size: 0.85rem;
+  color: $error-color;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
 }
 </style>

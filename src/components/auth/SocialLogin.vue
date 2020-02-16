@@ -2,6 +2,7 @@
   <div class="social-login">
     <v-btn
       color="#3b5998"
+      :disabled="isLoading.facebook"
       :loading="isLoading.facebook"
       @click="login('facebook')"
       class="social-button social-button--facebook"
@@ -12,6 +13,7 @@
 
     <v-btn
       color="#ff3e30"
+      :disabled="isLoading.google"
       :loading="isLoading.google"
       @click="login('google')"
       class="social-button social-button--google"
@@ -19,6 +21,7 @@
       <v-icon class="social-icon">fab fa-google</v-icon>
       <span>Login with Google</span>
     </v-btn>
+
     <p v-show="error" class="error-message">{{ error }}</p>
   </div>
 </template>
@@ -28,6 +31,7 @@ import { mapActions } from "vuex";
 
 export default {
   name: "social-login",
+
   data() {
     return {
       isLoading: {
@@ -37,6 +41,7 @@ export default {
       error: null
     };
   },
+
   methods: {
     ...mapActions({ socialLogin: "auth/socialLogin" }),
 
@@ -108,7 +113,8 @@ export default {
 
 .error-message {
   font-size: 0.85rem;
-  color: red;
+  color: $error-color;
   margin-top: 0.5rem;
+  margin-bottom: 0;
 }
 </style>

@@ -2,6 +2,7 @@
   <form @submit.prevent="submit" class="form">
     <v-text-field
       v-model.trim="email"
+      type="email"
       :error-messages="emailErrors"
       label="E-mail"
       required
@@ -11,18 +12,31 @@
 
     <v-text-field
       v-model.trim="password"
+      :type="showPassword ? 'text' : 'password'"
+      :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
       :error-messages="passwordErrors"
       label="Password"
       required
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
+      @click:append="showPassword = !showPassword"
     ></v-text-field>
 
-    <v-btn type="submit" class="mr-4 button" color="#04b4d4">submit</v-btn>
+    <p v-show="error" class="error-message">{{ error }}</p>
+
+    <v-btn
+      type="submit"
+      class="mr-4 button"
+      color="#04b4d4"
+      :disabled="isLoading"
+      :loading="isLoading"
+      >log in</v-btn
+    >
   </form>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 
@@ -44,7 +58,10 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      showPassword: false,
+      error: null,
+      isLoading: false
     };
   },
 
@@ -71,14 +88,33 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$v.$touch();
-    },
-    clear() {
+    ...mapActions({ login: "auth/login" }),
+
+    clearForm() {
       this.$v.$reset();
 
       this.email = "";
       this.password = "";
+    },
+
+    async submitForm() {
+      this.$v.$touch();
+      this.isLoading = true;
+
+      try {
+        await this.login({
+          email: this.email,
+          password: this.password,
+          router: this.$router
+        });
+
+        this.clearForm();
+        this.isLoading = false;
+        this.error = null;
+      } catch (error) {
+        this.error = error;
+        this.isLoading = false;
+      }
     }
   }
 };
@@ -96,5 +132,12 @@ export default {
   margin: 0;
   width: 100%;
   color: $white;
+}
+
+.error-message {
+  font-size: 0.85rem;
+  color: $error-color;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
 }
 </style>
