@@ -103,6 +103,27 @@ const routes = [
         }
       ]
     }
+  },
+  {
+    path: "/recipes/:recipeType",
+    name: "recipe-type",
+    component: () =>
+      import(
+        /* webpackChunkName: "recipe-type" */ "../views/recipes/RecipeType.vue"
+      ),
+    meta: {
+      title: "Recipe Type - Tasties",
+      metaTags: [
+        {
+          name: "description",
+          content: "The recipe type page of Tasties"
+        },
+        {
+          property: "og:description",
+          content: "The recipe type page of Tasties"
+        }
+      ]
+    }
   }
 ];
 
