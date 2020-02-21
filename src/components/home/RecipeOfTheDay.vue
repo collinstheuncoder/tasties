@@ -62,14 +62,14 @@ export default {
 
 .image {
   width: 100%;
-  height: 25rem;
+  height: 17.5rem;
 
   @include mediumDevices {
     height: 27.5rem;
   }
 
   @include largeDevices {
-    height: 32.5rem;
+    height: auto;
   }
 }
 

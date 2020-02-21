@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" class="form">
+  <form @submit.prevent="submitForm" class="form">
     <v-text-field
       v-model.trim="email"
       type="email"

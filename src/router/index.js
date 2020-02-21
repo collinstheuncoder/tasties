@@ -47,6 +47,27 @@ const routes = [
         }
       ]
     }
+  },
+  {
+    path: "/recipes/new",
+    name: "add-recipe",
+    component: () =>
+      import(
+        /* webpackChunkName: "add-recipe" */ "../views/recipes/NewRecipe.vue"
+      ),
+    meta: {
+      title: "Add Your Recipe - Tasties",
+      metaTags: [
+        {
+          name: "description",
+          content: "The add new recipe page of Tasties"
+        },
+        {
+          property: "og:description",
+          content: "The add new recipe page of Tasties"
+        }
+      ]
+    }
   }
 ];
 

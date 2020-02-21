@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import AppNavbar from "./components/layout/Navbar";
 import AppMain from "./components/layout/Main";
 import AppFooter from "./components/layout/Footer";
@@ -40,9 +42,18 @@ export default {
 
   data() {
     return {
-      routeName: this.$route.name,
-      isAuthenticated: false
+      routeName: this.$route.name
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated"
+    }),
+
+    displayNavAndFooter() {
+      return this.routeName === "register" || this.routeName === "login";
+    }
   },
 
   watch: {
@@ -55,16 +66,10 @@ export default {
     }
   },
 
-  computed: {
-    displayNavAndFooter() {
-      return this.routeName === "register" || this.routeName === "login";
-    }
-  },
-
   methods: {
     addRecipe() {
       if (!this.isAuthenticated) {
-        this.$router.push("/accounts/login");
+        this.$router.push("/auth/login");
       } else {
         this.$router.push("/recipes/new");
       }

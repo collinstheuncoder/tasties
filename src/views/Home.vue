@@ -94,7 +94,7 @@ export default {
   min-height: 50vh;
 
   @include mediumDevices {
-    margin: 2rem 5rem;
+    margin: 2rem 3.5rem;
   }
 
   @include largeDevices {
