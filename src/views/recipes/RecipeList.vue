@@ -11,7 +11,10 @@
         <div v-if="recipeList.length === 0" class="empty-recipe-list">
           There are currently no recipes in the database
         </div>
-        <!-- <recipe-list v-else class="recipe-list" :recipe-list="sortedRecipeList" /> -->
+        <section v-else class="recipe-list-grid">
+          <sort-recipe-list />
+          <recipe-list class="recipe-list" :recipe-list="sortedRecipeList" />
+        </section>
       </div>
     </div>
   </div>
@@ -20,21 +23,21 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 
-import { sortMethods } from "@/helpers";
+import { sortMethods, calculateRecipeRating } from "@/helpers";
 
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import Spinner from "@/components/shared/Spinner";
-// import SortRecipeList from "@/components/recipes/list/SortRecipeList";
-// import RecipeList from "@/components/recipes/shared/RecipeList";
+import SortRecipeList from "@/components/recipes/list/SortRecipeList";
+import RecipeList from "@/components/recipes/shared/RecipeList";
 
 export default {
   name: "recipe-list-page",
 
   components: {
     Breadcrumbs,
-    Spinner
-    // SortRecipeList,
-    // RecipeList
+    Spinner,
+    SortRecipeList,
+    RecipeList
   },
 
   data() {
@@ -64,7 +67,14 @@ export default {
           sortedList = [...this.recipeList].sort(sortMethods.byOldest);
           break;
         case "highest-rated":
-          sortedList = [...this.recipeList].sort(sortMethods.byRating);
+          sortedList = [...this.recipeList]
+            .map(recipe => ({
+              ...recipe,
+              rating: calculateRecipeRating(
+                JSON.parse(JSON.stringify(recipe.ratedBy))
+              )
+            }))
+            .sort(sortMethods.byRating);
           break;
         case "most-viewed":
           sortedList = [...this.recipeList].sort(sortMethods.byViews);
@@ -116,8 +126,10 @@ export default {
   &-page {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    justify-content: center;
+    align-items: center;
     padding-top: 0.5rem;
+    min-height: 50vh;
 
     @include mediumDevices {
       margin: 2rem 3.5rem;
@@ -126,6 +138,14 @@ export default {
 
     @include largeDevices {
       margin: 2rem 8.5rem;
+    }
+  }
+
+  &-grid {
+    padding: 1rem;
+
+    @include mediumDevices {
+      padding: 0;
     }
   }
 }
