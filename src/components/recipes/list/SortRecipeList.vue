@@ -1,24 +1,27 @@
 <template>
   <div class="sort-by">
-    <sui-dropdown
-      placeholder="Sort Recipe List"
-      selection
-      :options="options"
+    <h2 class="sort-by-title">{{ sortBy }} recipes</h2>
+    <v-select
       :value="sortBy"
-      @input="sortRecipes"
-    />
+      :items="sortByOptions"
+      label="Sort Recipe List"
+      @input="sortRecipeList"
+      class="sort-by-dropdown"
+    ></v-select>
   </div>
 </template>
 
 <script>
 export default {
   name: "sort-recipe-list",
+
   data() {
     return {
-      options: [
+      sortBy: "newest",
+      sortByOptions: [
         {
-          value: "latest",
-          text: "Latest"
+          value: "newest",
+          text: "Newest"
         },
         {
           value: "oldest",
@@ -36,23 +39,48 @@ export default {
           value: "most-commented",
           text: "Most Commented"
         }
-      ],
-      sortBy: "latest"
+      ]
     };
   },
+
   methods: {
-    sortRecipes(e) {
-      this.$eventBus.$emit("sort-recipe-list", e.target.value);
+    sortRecipeList($sortBy) {
+      this.$eventBus.$emit("sort-recipe-list", $sortBy);
     }
-  },
-  beforeDestroy() {
-    this.$eventBus.$off("sort-recipe-list");
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../../scss/style";
+
 .sort-by {
-  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 1rem;
+
+  @include mediumDevices {
+    margin: 1rem 0 2rem;
+  }
+
+  &-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $app-secondary-color;
+
+    @include mediumDevices {
+      font-size: 1.25rem;
+    }
+  }
+
+  &-dropdown {
+    max-width: 15rem;
+    margin-bottom: -2rem;
+
+    @include mediumDevices {
+      margin-bottom: -1.5rem;
+    }
+  }
 }
 </style>
