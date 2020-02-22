@@ -52,7 +52,11 @@ export default {
     }),
 
     displayNavAndFooter() {
-      return this.routeName === "register" || this.routeName === "login";
+      return (
+        this.routeName === "register" ||
+        this.routeName === "login" ||
+        this.routeName === "not-found"
+      );
     }
   },
 
