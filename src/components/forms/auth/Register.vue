@@ -58,7 +58,7 @@
 
     <v-btn
       type="submit"
-      class="mr-4 button"
+      class="mr-4 button white--text"
       color="#04b4d4"
       :disabled="isLoading"
       :loading="isLoading"

@@ -1,13 +1,16 @@
 <template>
-  <div class="recipe-type">
+  <div class="recipe-type-page">
     <recipe-type-header :recipe-type-info="recipeTypeInfo[0]" />
-    <div class="recipe-type-main">
+    <div
+      class="recipe-type-main"
+      :class="{ 'recipe-type-main--loading': isLoading }"
+    >
       <breadcrumbs :breadcrumb-links="breadcrumbLinks" />
       <div class="recipe-type-separator"></div>
       <div v-if="isLoading" class="spinner">
         <spinner
           :message="`Loading ${recipeTypeInfo[0].name} Recipes`"
-          size="huge"
+          :size="50"
         />
       </div>
       <div v-else-if="error">{{ error }}</div>
@@ -30,8 +33,8 @@ import { mapGetters, mapActions } from "vuex";
 
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import Spinner from "@/components/shared/Spinner";
-import RecipeTypeHeader from "@/components/recipes/type/Header";
-import RecipeList from "@/components/recipes/shared/RecipeList";
+import RecipeTypeHeader from "@/components/recipe/type/Header";
+import RecipeList from "@/components/recipe/shared/RecipeList";
 
 import { recipeTypeList } from "@/helpers";
 
@@ -109,6 +112,11 @@ export default {
     flex: 1;
     padding-top: 1rem;
     margin: 1rem;
+
+    &--loading {
+      justify-content: center;
+      align-items: center;
+    }
 
     @include mediumDevices {
       margin: 0 5rem 2rem;

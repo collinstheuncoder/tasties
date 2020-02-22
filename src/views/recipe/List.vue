@@ -1,11 +1,14 @@
 <template>
-  <div class="recipe-list-page">
+  <div
+    class="recipe-list-page"
+    :class="{ 'recipe-list-page--loading': isLoading }"
+  >
     <spinner v-if="isLoading" message="Loading Recipes" :size="50" />
     <p v-else-if="error">{{ error }}</p>
     <div v-else>
-      <div v-if="recipeList.length === 0" class="empty-recipe-list">
+      <p v-if="recipeList.length === 0" class="empty-recipe-list">
         Oops! Something went wrong
-      </div>
+      </p>
       <div v-else class="recipe-list-content">
         <breadcrumbs :breadcrumb-links="breadcrumbLinks" />
         <div v-if="recipeList.length === 0" class="empty-recipe-list">
@@ -27,8 +30,8 @@ import { sortMethods, calculateRecipeRating } from "@/helpers";
 
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 import Spinner from "@/components/shared/Spinner";
-import SortRecipeList from "@/components/recipes/list/SortRecipeList";
-import RecipeList from "@/components/recipes/shared/RecipeList";
+import SortRecipeList from "@/components/recipe/list/SortRecipeList";
+import RecipeList from "@/components/recipe/shared/RecipeList";
 
 export default {
   name: "recipe-list-page",
@@ -126,10 +129,14 @@ export default {
   &-page {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding-top: 0.5rem;
     min-height: 50vh;
+
+    &--loading {
+      justify-content: center;
+      align-items: center;
+    }
 
     @include mediumDevices {
       margin: 2rem 3.5rem;

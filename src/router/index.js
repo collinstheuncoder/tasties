@@ -66,9 +66,7 @@ const routes = [
     name: "recipe-list",
     exact: true,
     component: () =>
-      import(
-        /* webpackChunkName: "recipe-list" */ "../views/recipes/RecipeList.vue"
-      ),
+      import(/* webpackChunkName: "recipe-list" */ "../views/recipe/List.vue"),
     meta: {
       title: "Recipe List - Tasties",
       metaTags: [
@@ -87,9 +85,7 @@ const routes = [
     path: "/recipes/new",
     name: "add-recipe",
     component: () =>
-      import(
-        /* webpackChunkName: "add-recipe" */ "../views/recipes/NewRecipe.vue"
-      ),
+      import(/* webpackChunkName: "add-recipe" */ "../views/recipe/New.vue"),
     meta: {
       title: "Add Your Recipe - Tasties",
       metaTags: [
@@ -108,9 +104,7 @@ const routes = [
     path: "/recipes/:recipeType",
     name: "recipe-type",
     component: () =>
-      import(
-        /* webpackChunkName: "recipe-type" */ "../views/recipes/RecipeType.vue"
-      ),
+      import(/* webpackChunkName: "recipe-type" */ "../views/recipe/Type.vue"),
     meta: {
       title: "Recipe Type - Tasties",
       metaTags: [
@@ -121,6 +115,28 @@ const routes = [
         {
           property: "og:description",
           content: "The recipe type page of Tasties"
+        }
+      ]
+    }
+  },
+  {
+    path: "/recipes/:recipeType/:recipeId",
+    name: "recipe-detail",
+    props: true,
+    component: () =>
+      import(
+        /* webpackChunkName: "recipe-detail" */ "../views/recipe/Detail.vue"
+      ),
+    meta: {
+      title: "Recipe Detail - Tasties",
+      metaTags: [
+        {
+          name: "description",
+          content: "The recipe detail page of Tasties"
+        },
+        {
+          property: "og:description",
+          content: "The recipe detail page of Tasties"
         }
       ]
     }
