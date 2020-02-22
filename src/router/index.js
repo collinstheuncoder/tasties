@@ -140,6 +140,44 @@ const routes = [
         }
       ]
     }
+  },
+  {
+    path: "/recipes/:recipeType/:recipeId/edit",
+    name: "edit-recipe",
+    component: () =>
+      import(/* webpackChunkName: "edit-recipe" */ "../views/recipe/Edit.vue"),
+    meta: {
+      title: "Edit Recipe - Tasties",
+      metaTags: [
+        {
+          name: "description",
+          content: "The edit recipe page of Tasties"
+        },
+        {
+          property: "og:description",
+          content: "The edit recipe page of Tasties"
+        }
+      ]
+    }
+  },
+  {
+    path: "*",
+    name: "not-found",
+    component: () =>
+      import(/* webpackChunkName: "not-found" */ "../views/NotFound.vue"),
+    meta: {
+      title: "Page Not Found - Tasties",
+      metaTags: [
+        {
+          name: "description",
+          content: "The not found page of Tasties"
+        },
+        {
+          property: "og:description",
+          content: "The not found page of Tasties"
+        }
+      ]
+    }
   }
 ];
 

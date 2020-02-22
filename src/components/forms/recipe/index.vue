@@ -349,6 +349,7 @@ export default {
 .fieldset {
   border: 1px solid rgba(0, 0, 0, 0.14);
   padding: 1rem 1rem 0.5rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 

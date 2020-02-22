@@ -6,7 +6,7 @@
 
     <form @submit.prevent="addInnstruction" class="instructions-form">
       <v-text-field
-        v-model="instructions"
+        v-model="instruction"
         append-icon="mdi-plus"
         label="Enter Ingredient"
         required
@@ -75,6 +75,8 @@ export default {
 @import "../../../scss/style";
 
 .instructions {
+  margin-top: 1rem;
+
   &-label {
     color: $app-secondary-color;
   }

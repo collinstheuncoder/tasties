@@ -74,6 +74,8 @@ export default {
 @import "../../../scss/style";
 
 .ingredients {
+  margin-top: 1rem;
+
   &-label {
     color: $app-secondary-color;
   }
