@@ -97,10 +97,6 @@ export default {
   letter-spacing: 1px;
 }
 
-html {
-  overflow: hidden;
-}
-
 a {
   text-decoration: none;
 }
