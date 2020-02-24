@@ -119,8 +119,6 @@ const actions = {
       getters.currentUser.id
     );
 
-    console.log(updatedUserDoc);
-
     if (updatedUserDoc.exists) {
       commit("setUserUpdate", "current-user-update", updatedFields);
     }
@@ -135,11 +133,7 @@ const actions = {
     const followedUserPromise = updateUser({ followedBy }, userId);
     const currentUserPromise = updateUser({ following }, currentUserId);
 
-    console.log({ followedUserPromise, currentUserPromise });
-
-    const res = await Promise.all([followedUserPromise, currentUserPromise]);
-
-    console.log(res);
+    await Promise.all([followedUserPromise, currentUserPromise]);
 
     // if (followedUserDoc.exists && currentUserDoc.exists) {
     //   commit(
