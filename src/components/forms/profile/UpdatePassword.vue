@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 
 .title {
   color: $app-secondary-color;

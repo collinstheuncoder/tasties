@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .most-viewed-recipes {
   flex-direction: column;

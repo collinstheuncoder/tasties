@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .header {
   display: flex;
@@ -131,7 +131,7 @@ export default {
 }
 
 .btn {
-  color: $app-color !important;
+  color: $app-main-color !important;
 
   &--icon {
     &-magnify {

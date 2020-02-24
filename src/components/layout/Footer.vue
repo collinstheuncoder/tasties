@@ -52,13 +52,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .footer {
   padding: 0;
 
   &-card {
-    background-color: $app-color !important;
+    background-color: $app-main-color !important;
     padding: 1.5rem 0;
   }
 }

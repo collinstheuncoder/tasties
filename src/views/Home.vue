@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/style";
+@import "../assets/styles/custom/style";
 
 .home-page {
   margin: 1rem;

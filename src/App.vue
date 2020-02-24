@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./scss/style";
+@import "./assets/styles/custom/style";
 
 #app {
   font-family: $primary-font;

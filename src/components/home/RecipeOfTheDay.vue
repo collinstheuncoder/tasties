@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .recipe-of-the-day {
   flex-basis: 100%;

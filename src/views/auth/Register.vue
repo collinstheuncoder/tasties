@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .register {
   &-page {
@@ -121,7 +121,7 @@ export default {
   }
 
   &-link {
-    color: $app-color;
+    color: $app-main-color;
     text-decoration: none;
   }
 }
@@ -134,7 +134,7 @@ export default {
   }
 
   &-link {
-    color: $app-color;
+    color: $app-main-color;
     text-decoration: none;
   }
 }

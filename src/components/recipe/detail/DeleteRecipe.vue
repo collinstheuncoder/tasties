@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 .delete-recipe {
   margin-left: 1rem;
   display: inline;
@@ -109,7 +109,7 @@ export default {
   padding: 1rem !important;
 
   &-name {
-    color: $main-color;
+    color: $app-main-color;
   }
 }
 

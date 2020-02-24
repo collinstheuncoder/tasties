@@ -7,6 +7,9 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 
+import "./assets/styles/vendor/fontawesome/css/all.min.css";
+import "./assets/styles/vendor/materialdesignicons/css/materialdesignicons.min.css";
+
 import "./registerServiceWorker";
 
 Vue.config.productionTip = false;

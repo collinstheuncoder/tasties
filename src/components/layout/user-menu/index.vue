@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 
 .menu-subheader {
   padding: 0.25rem 0.5rem;
@@ -128,7 +128,7 @@ export default {
   padding: 0.25rem 1rem;
 
   &:hover * {
-    color: $app-color;
+    color: $app-main-color;
   }
 }
 
@@ -137,7 +137,7 @@ export default {
   text-decoration: none;
 
   &:hover {
-    color: $app-color;
+    color: $app-main-color;
   }
 }
 </style>

@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/style";
+@import "../../assets/styles/custom/style";
 
 .spinner {
   text-align: center;
@@ -36,7 +36,7 @@ export default {
   &-label {
     font-size: 0.85rem;
     margin-top: 1rem;
-    color: $app-color;
+    color: $app-main-color;
   }
 }
 </style>

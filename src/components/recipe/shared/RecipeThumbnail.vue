@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 
 .recipe {
   border-bottom: 1px solid #cdcdcd;

@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 
 .posted-by {
   display: flex;

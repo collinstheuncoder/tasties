@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../scss/style";
+@import "../../../assets/styles/custom/style";
 
 .edit-profile {
   width: 27.5rem;
