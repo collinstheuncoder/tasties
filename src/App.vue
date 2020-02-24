@@ -13,6 +13,7 @@
           right
           v-show="!displayNavAndFooter"
           class="add-recipe"
+          aria-label="Add recipe"
           @click="addRecipe"
           v-on="on"
         >
