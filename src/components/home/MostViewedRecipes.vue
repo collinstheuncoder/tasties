@@ -13,7 +13,7 @@
       >
         <v-card class="mx-auto recipe-card">
           <v-img
-            lazy-src="https://picsum.photos/id/11/10/6"
+            :lazy-src="require('@/assets/images/lazy-load.jpg')"
             aspect-ratio="1"
             height="185"
             max-height="200"

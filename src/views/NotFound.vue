@@ -68,6 +68,7 @@ export default {
 
   &-link {
     color: $app-main-color;
+    cursor: pointer;
   }
 }
 </style>

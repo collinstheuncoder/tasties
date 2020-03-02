@@ -20,7 +20,14 @@
           </div>
           <div class="recipe-col recipe-col--img">
             <router-link :to="`/recipes/${recipe.recipeType[0]}/${recipe.id}`">
-              <img :src="recipe.imageUrl" :alt="recipe.name" class="image" />
+              <v-img
+                :lazy-src="require('@/assets/images/lazy-load.jpg')"
+                aspect-ratio="1"
+                height="125"
+                max-height="150"
+                :src="recipe.imageUrl"
+                :alt="recipe.name"
+              />
             </router-link>
           </div>
         </div>
@@ -66,6 +73,12 @@ export default {
 .newest-additions {
   display: none;
 
+  @include mediumDevices {
+    display: block;
+    flex-basis: 45%;
+    margin-left: 1.5rem;
+  }
+
   @include largeDevices {
     display: block;
     flex-basis: 30%;
@@ -78,15 +91,15 @@ export default {
 }
 
 .recipe {
-  padding: 1rem 1rem 0.5rem;
+  padding: 1rem 1rem 1rem;
 
   &:nth-of-type(odd) {
     background-color: #efefef;
   }
 
   &:nth-of-type(even) {
-    padding-top: 0.5rem;
-    padding-bottom: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
   }
 
   &-row {
@@ -96,12 +109,12 @@ export default {
 
   &-col {
     &--info {
-      flex-basis: 65%;
+      flex-basis: 55%;
       padding-right: 1rem;
     }
 
     &--img {
-      flex-basis: 35%;
+      flex-basis: 45%;
     }
   }
 
@@ -122,11 +135,6 @@ export default {
       color: #333333;
     }
   }
-}
-
-.image {
-  width: 10rem;
-  height: 7.5rem;
 }
 
 .divider {

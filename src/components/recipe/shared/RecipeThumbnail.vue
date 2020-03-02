@@ -4,12 +4,15 @@
       :to="generateRecipeLink(recipe.recipeType, recipe.id)"
       class="recipe-link"
     >
-      <div
+      <v-img
+        :lazy-src="require('@/assets/images/lazy-load.jpg')"
+        aspect-ratio="1"
+        height="225"
+        max-height="275"
+        :src="recipe.imageUrl"
+        :alt="recipe.name"
         class="recipe-image"
-        :style="{
-          background: `url(${recipe.imageUrl})`
-        }"
-      ></div>
+      />
       <div class="recipe-info">
         <p class="recipe-name">{{ recipe.name }}</p>
         <p class="recipe-desc">{{ truncatedDescription }}</p>
@@ -90,12 +93,6 @@ export default {
 
   &-info {
     margin-top: 0.5rem;
-  }
-
-  &-image {
-    background-position: center !important;
-    background-size: cover !important;
-    height: 15rem;
   }
 
   &-name {

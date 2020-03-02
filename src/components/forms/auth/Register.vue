@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" class="form">
+  <form @submit.prevent="submitForm" class="form">
     <v-text-field
       v-model="fullname"
       :error-messages="fullnameErrors"
@@ -115,6 +115,7 @@ export default {
       confirmPassword: "",
       showPassword: false,
       showConfirmPassword: false,
+      isUsernameAvailable: false,
       error: null,
       isLoading: false
     };
@@ -181,6 +182,18 @@ export default {
   methods: {
     ...mapActions({ register: "auth/register" }),
 
+    // async checkForUsernameAvailabilty() {
+    //   const isAvailable = await (
+    //     await fetch(
+    //       `${process.env.VUE_APP_CHECK_USERNAME_URL}?username=${this.username}`
+    //     )
+    //   ).json();
+
+    //   console.log(isAvailable);
+
+    //   this.isLoading = false;
+    // },
+
     clearForm() {
       this.$v.$reset();
 
@@ -194,6 +207,8 @@ export default {
     async submitForm() {
       this.$v.$touch();
       this.isLoading = true;
+
+      // this.checkForUsernameAvailabilty();
 
       try {
         await this.register({

@@ -106,6 +106,6 @@ p {
 }
 
 .add-recipe {
-  top: 89vh;
+  bottom: 1rem;
 }
 </style>

@@ -1,10 +1,12 @@
 <template>
   <section class="recipe-of-the-day">
-    <img
+    <v-img
+      :lazy-src="require('@/assets/images/lazy-load.jpg')"
+      aspect-ratio="1"
       :src="recipeOfTheDay.imageUrl"
       :alt="recipeOfTheDay.name"
-      class="image"
-    />
+    >
+    </v-img>
     <p class="recipe-title">Recipe of the day</p>
     <p class="recipe-name">{{ recipeOfTheDay.name }}</p>
     <div class="recipe-added-by">
@@ -54,22 +56,14 @@ export default {
 .recipe-of-the-day {
   flex-basis: 100%;
 
+  @include mediumDevices {
+    flex-basis: 55%;
+    margin-right: 1.5rem;
+  }
+
   @include largeDevices {
     flex-basis: 70%;
     margin-right: 2rem;
-  }
-}
-
-.image {
-  width: 100%;
-  height: 17.5rem;
-
-  @include mediumDevices {
-    height: 27.5rem;
-  }
-
-  @include largeDevices {
-    height: auto;
   }
 }
 
@@ -125,6 +119,7 @@ export default {
     &-image {
       height: 1.5rem;
       width: 1.5rem;
+      border-radius: 50%;
     }
 
     &-name {

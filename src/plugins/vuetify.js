@@ -1,13 +1,85 @@
 import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import Vuetify, {
+  VApp,
+  VBtn,
+  VCard,
+  VCardActions,
+  VCardText,
+  VCardTitle,
+  VCheckbox,
+  VCol,
+  VContent,
+  VDialog,
+  VDivider,
+  VFlex,
+  VFooter,
+  VIcon,
+  VImg,
+  VLayout,
+  VList,
+  VListItem,
+  VListItemContent,
+  VListItemGroup,
+  VListItemTitle,
+  VMenu,
+  VProgressCircular,
+  VProgressLinear,
+  VRating,
+  VRow,
+  VSelect,
+  VSheet,
+  VSlideGroup,
+  VSlideItem,
+  VSnackbar,
+  VSpacer,
+  VSubheader,
+  VTextarea,
+  VTextField,
+  VTooltip
+} from "vuetify/lib";
 
-Vue.use(Vuetify);
-
-export default new Vuetify({
+Vue.use(Vuetify, {
+  components: {
+    VApp,
+    VBtn,
+    VCard,
+    VCardActions,
+    VCardText,
+    VCardTitle,
+    VCheckbox,
+    VCol,
+    VContent,
+    VDialog,
+    VDivider,
+    VFlex,
+    VFooter,
+    VIcon,
+    VImg,
+    VLayout,
+    VList,
+    VListItem,
+    VListItemContent,
+    VListItemGroup,
+    VListItemTitle,
+    VMenu,
+    VProgressCircular,
+    VProgressLinear,
+    VRating,
+    VRow,
+    VSelect,
+    VSheet,
+    VSlideGroup,
+    VSlideItem,
+    VSnackbar,
+    VSpacer,
+    VSubheader,
+    VTextarea,
+    VTextField,
+    VTooltip
+  },
   icons: {
     iconfont: "mdi"
   },
-
   theme: {
     themes: {
       light: {
@@ -17,3 +89,5 @@ export default new Vuetify({
     }
   }
 });
+
+export default new Vuetify();

@@ -13,6 +13,8 @@
     "emoji-mart": "^2.11.2",
     "emoji-mart-vue": "^2.6.6",
     "firebase": "^7.8.2",
+    "imagemin": "^7.0.1",
+    "imagemin-webp": "^5.1.0",
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
@@ -22,6 +24,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.0.6",
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-pwa": "~4.2.0",
@@ -37,6 +40,7 @@
     "eslint-plugin-vue": "^6.1.2",
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
+    "purgecss": "^2.0.6",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-vuetify": "^2.0.5",

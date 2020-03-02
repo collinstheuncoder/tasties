@@ -56,7 +56,7 @@
       <v-list-item
         v-show="!isAuthenticated"
         class="menu-item"
-        @click="navigateTo('/auth/register')"
+        @click="navigateTo('register')"
       >
         <router-link to="/auth/register" class="menu-link"
           >Register</router-link
@@ -65,7 +65,7 @@
       <v-list-item
         v-show="!isAuthenticated"
         class="menu-item"
-        @click="navigateTo('/auth/login')"
+        @click="navigateTo('login')"
       >
         <router-link to="/auth/login" class="menu-link">Login</router-link>
       </v-list-item>
@@ -99,15 +99,19 @@ export default {
   methods: {
     ...mapActions({ logout: "auth/logout" }),
 
-    navigateTo(recipes) {
-      this.$router.push({
-        name: "profile",
-        params: {
-          userId: this.currentUser.id,
-          fullname: this.currentUser.fullname,
-          recipes
-        }
-      });
+    navigateTo(to) {
+      if (this.isAuthenticated) {
+        this.$router.push({
+          name: "profile",
+          params: {
+            userId: this.currentUser.id,
+            fullname: this.currentUser.fullname,
+            recipes: to
+          }
+        });
+      } else {
+        this.$router.push({ path: "auth", name: to });
+      }
     },
 
     logoutUser() {
