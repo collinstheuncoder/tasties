@@ -1,5 +1,6 @@
 import Vue from "vue";
 import firebase from "firebase";
+import SocialSharing from "vue-social-sharing";
 
 import App from "./App.vue";
 
@@ -11,6 +12,8 @@ import "./assets/styles/vendor/fontawesome/css/all.min.css";
 import "./assets/styles/vendor/materialdesignicons/css/materialdesignicons.min.css";
 
 import "./registerServiceWorker";
+
+Vue.use(SocialSharing);
 
 Vue.config.productionTip = false;
 

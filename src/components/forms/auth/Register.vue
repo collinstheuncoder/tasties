@@ -124,6 +124,7 @@ export default {
   computed: {
     fullnameErrors() {
       const errors = [];
+
       if (!this.$v.fullname.$dirty) return errors;
 
       !this.$v.fullname.required && errors.push("Full name is required.");
@@ -133,6 +134,7 @@ export default {
 
     usernameErrors() {
       const errors = [];
+
       if (!this.$v.username.$dirty) return errors;
 
       !this.$v.username.minLength &&
@@ -157,6 +159,7 @@ export default {
 
     passwordErrors() {
       const errors = [];
+
       if (!this.$v.password.$dirty) return errors;
 
       !this.$v.password.minLength &&
@@ -170,6 +173,7 @@ export default {
 
     confirmPasswordErrors() {
       const errors = [];
+
       if (!this.$v.confirmPassword.$dirty) return errors;
 
       !this.$v.confirmPassword.sameAsPassword &&
@@ -182,17 +186,17 @@ export default {
   methods: {
     ...mapActions({ register: "auth/register" }),
 
-    // async checkForUsernameAvailabilty() {
-    //   const isAvailable = await (
-    //     await fetch(
-    //       `${process.env.VUE_APP_CHECK_USERNAME_URL}?username=${this.username}`
-    //     )
-    //   ).json();
+    async checkForUsernameAvailabilty() {
+      const isAvailable = await (
+        await fetch(
+          `${process.env.VUE_APP_CHECK_USERNAME_URL}?username=${this.username}`
+        )
+      ).json();
 
-    //   console.log(isAvailable);
+      console.log(isAvailable);
 
-    //   this.isLoading = false;
-    // },
+      this.isLoading = false;
+    },
 
     clearForm() {
       this.$v.$reset();
@@ -208,7 +212,7 @@ export default {
       this.$v.$touch();
       this.isLoading = true;
 
-      // this.checkForUsernameAvailabilty();
+      this.checkForUsernameAvailabilty();
 
       try {
         await this.register({

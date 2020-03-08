@@ -57,7 +57,7 @@ export default {
 
   methods: {
     ...mapActions({
-      getAllRecipes: "recipes/getAllRecipes"
+      getRecipes: "recipes/getRecipes"
     }),
     getRandomRecipe(recipeList) {
       const randomIndex = Math.floor(Math.random() * recipeList.length);
@@ -71,7 +71,7 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.getAllRecipes();
+        await this.getRecipes();
 
         this.isLoading = false;
       } catch (error) {

@@ -1,16 +1,34 @@
 <template>
-  <v-footer v-bind="localAttrs" class="footer">
+  <v-footer class="footer">
     <v-card flat tile width="100%" class="footer-card text-center">
       <v-card-text>
-        <v-btn
-          v-for="icon in icons"
-          :key="icon"
-          class="mx-4"
-          icon
-          :aria-label="`share app on ${icon}`"
+        <social-sharing
+          url="https://tasties-5b8b0.firebaseapp.com/"
+          inline-template
         >
-          <v-icon size="24px">{{ `fab fa-${icon}` }}</v-icon>
-        </v-btn>
+          <div>
+            <network network="twitter">
+              <v-btn class="mx-4" icon aria-label="share app on twitter">
+                <v-icon size="24px">fab fa-twitter</v-icon>
+              </v-btn>
+            </network>
+            <network network="facebook">
+              <v-btn class="mx-4" icon aria-label="share app on facebook">
+                <v-icon size="24px">fab fa-facebook</v-icon>
+              </v-btn>
+            </network>
+            <network network="googleplus">
+              <v-btn class="mx-4" icon aria-label="share app on google">
+                <v-icon size="24px">fab fa-google-plus</v-icon>
+              </v-btn>
+            </network>
+            <network network="reddit">
+              <v-btn class="mx-4" icon aria-label="share app on reddit">
+                <v-icon size="24px">fab fa-reddit</v-icon>
+              </v-btn>
+            </network>
+          </div>
+        </social-sharing>
       </v-card-text>
 
       <v-divider class="divider"></v-divider>
@@ -28,25 +46,8 @@ export default {
 
   data() {
     return {
-      currentYear: new Date().getFullYear(),
-      icons: ["twitter", "facebook", "google-plus", "reddit"],
-      items: ["default", "absolute", "fixed"],
-      variant: "default"
+      currentYear: new Date().getFullYear()
     };
-  },
-
-  computed: {
-    localAttrs() {
-      const attrs = {};
-
-      if (this.variant === "default") {
-        attrs.absolute = false;
-        attrs.fixed = false;
-      } else {
-        attrs[this.variant] = true;
-      }
-      return attrs;
-    }
   }
 };
 </script>

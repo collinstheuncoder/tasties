@@ -9,7 +9,7 @@
           fab
         >
           <label for="profile-photo" class="profile-photo-label">
-            <v-icon dark>mdi-cloud-upload</v-icon>
+            <v-icon dark class="upload-icon">mdi-cloud-upload</v-icon>
           </label>
         </v-btn>
 
@@ -46,10 +46,10 @@
         </v-btn>
 
         <v-btn
+          type="submit"
           color="#04b4d4"
           :disabled="isLoading"
           :loading="isLoading"
-          @submit.prevent="submitPassword"
           class="action-btn white--text"
         >
           Submit
@@ -118,7 +118,10 @@ export default {
     },
 
     async submitForm() {
+      console.log(this.currentUser);
+
       if (this.currentUser) {
+        console.log(this.currentUser);
         this.isLoading = true;
 
         try {
@@ -151,7 +154,11 @@ export default {
 @import "../../../assets/styles/custom/style";
 
 .edit-profile {
-  width: 27.5rem;
+  width: 88%;
+
+  @include mediumDevices {
+    width: 27.5rem;
+  }
 }
 
 .title {
@@ -176,8 +183,16 @@ export default {
 
   &-button {
     position: absolute;
-    transform: translate(293%, 81%);
+    transform: translate(225%, 50%);
     z-index: 1;
+    height: 3rem;
+    width: 3rem;
+
+    @include mediumDevices {
+      height: 3.5rem;
+      width: 3.5rem;
+      transform: translate(293%, 81%);
+    }
   }
 
   &-label {
@@ -189,29 +204,39 @@ export default {
   }
 
   &-preview {
-    height: 10rem;
-    width: 10rem;
+    height: 7rem;
+    width: 7rem;
     border-radius: 50%;
     display: block;
     position: absolute;
     transform: translateX(75%);
+
+    @include mediumDevices {
+      height: 10rem;
+      width: 10rem;
+    }
+  }
+}
+
+.upload-icon {
+  font-size: 1.5rem;
+
+  @include mediumDevices {
+    font-size: 2rem;
   }
 }
 
 .error {
-  color: $error-color;
+  color: $white;
   font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
 }
 
-.submit-btn {
-  background-color: $app-main-color !important;
-  color: $white !important;
-  width: 100%;
+.action-btn {
+  font-size: 0.75rem;
 
-  &:hover,
-  &:focus {
-    background-color: $app-main-color !important;
-    color: $white !important;
+  @include mediumDevices {
+    font-size: 1rem;
   }
 }
 </style>

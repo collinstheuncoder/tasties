@@ -2,15 +2,29 @@
   <v-select
     :value="difficulty"
     :items="difficultyOptions"
+    :error-messages="difficultyErrors"
     filled
     label="Recipe Difficulty"
     @input="selectRecipeDifficulty"
+    @change="$v.select.$touch()"
+    @blur="$v.select.$touch()"
   ></v-select>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "recipe-difficulty-field",
+
+  mixins: [validationMixin],
+
+  validations: {
+    difficulty: {
+      required
+    }
+  },
 
   props: {
     actionType: {
@@ -40,6 +54,19 @@ export default {
         }
       ]
     };
+  },
+
+  computed: {
+    difficultyErrors() {
+      const errors = [];
+
+      if (!this.$v.difficulty.$dirty) return errors;
+
+      !this.$v.difficulty.required &&
+        errors.push("Recipe difficulty is required");
+
+      return errors;
+    }
   },
 
   methods: {

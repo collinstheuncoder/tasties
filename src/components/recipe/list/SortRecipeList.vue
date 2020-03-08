@@ -1,11 +1,11 @@
 <template>
   <div class="sort-by">
-    <h2 class="sort-by-title">{{ sortBy }} recipes</h2>
+    <h2 class="sort-by-title">{{ sortOption.replace("-", " ") }} recipes</h2>
     <v-select
-      :value="sortBy"
+      :value="sortOption"
       :items="sortByOptions"
       label="Sort Recipe List"
-      @input="sortRecipeList"
+      @input="selectSortOption"
       class="sort-by-dropdown"
     ></v-select>
   </div>
@@ -17,7 +17,7 @@ export default {
 
   data() {
     return {
-      sortBy: "newest",
+      sortOption: "latest",
       sortByOptions: [
         {
           value: "newest",
@@ -44,8 +44,9 @@ export default {
   },
 
   methods: {
-    sortRecipeList($sortBy) {
-      this.$eventBus.$emit("sort-recipe-list", $sortBy);
+    selectSortOption($sortBy) {
+      this.sortOption = $sortBy;
+      this.$emit("sortRecipeListBy", $sortBy);
     }
   }
 };

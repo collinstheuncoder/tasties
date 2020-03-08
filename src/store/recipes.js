@@ -1,5 +1,7 @@
 import {
   fetchRecipes,
+  fetchMoreRecipes,
+  recipesCollectionSize,
   fetchRecipesByType,
   fetchRecipeById,
   fetchCommentById,
@@ -16,6 +18,7 @@ const storedRecipe = JSON.parse(sessionStorage.getItem("recipe"));
 
 const state = {
   recipeList: storedRecipeList || [],
+  recipeListTotalSize: 0,
   recipeListByType: [],
   recipe: storedRecipe || null,
   comment: null
@@ -29,8 +32,9 @@ const getters = {
 };
 
 const mutations = {
-  setAllRecipes: (state, recipes) => {
+  setAllRecipes: (state, recipes, size) => {
     state.recipeList = recipes;
+    state.recipeListTotalSize = size;
   },
   setRecipesByType: (state, recipesByType) => {
     state.recipeListByType = recipesByType;
@@ -53,8 +57,24 @@ const mutations = {
 };
 
 const actions = {
-  getAllRecipes: async ({ commit }) => {
+  getRecipes: async ({ commit }) => {
     const recipesSnapshot = await fetchRecipes();
+    const { size } = await recipesCollectionSize();
+
+    const recipes = recipesSnapshot.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id
+    }));
+
+    sessionStorage.setItem("recipe-list", JSON.stringify(recipes));
+
+    commit("setAllRecipes", recipes, size);
+  },
+
+  getMoreRecipes: async ({ commit, getters }) => {
+    const lastRecipeItem = getters.recipeList[getters.recipeList.length - 1];
+
+    const recipesSnapshot = await fetchMoreRecipes(lastRecipeItem);
 
     const recipes = recipesSnapshot.docs.map(doc => ({
       ...doc.data(),

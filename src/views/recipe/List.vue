@@ -15,7 +15,7 @@
           There are currently no recipes in the database
         </div>
         <section v-else class="recipe-list-grid">
-          <sort-recipe-list />
+          <sort-recipe-list @sortRecipeListBy="sortRecipeList" />
           <recipe-list class="recipe-list" :recipe-list="sortedRecipeList" />
         </section>
       </div>
@@ -59,6 +59,7 @@ export default {
 
   computed: {
     ...mapGetters({ recipeList: "recipes/recipeList" }),
+
     sortedRecipeList() {
       let sortedList;
 
@@ -94,7 +95,11 @@ export default {
   },
 
   methods: {
-    ...mapActions({ getAllRecipes: "recipes/getAllRecipes" })
+    ...mapActions({ getRecipes: "recipes/getRecipes" }),
+
+    sortRecipeList(sortBy) {
+      this.sortBy = sortBy;
+    }
   },
 
   async created() {
@@ -102,11 +107,7 @@ export default {
       this.isLoading = true;
 
       try {
-        await this.getAllRecipes();
-
-        this.$eventBus.$on("sort-recipe-list", payload => {
-          this.sortBy = payload;
-        });
+        await this.getRecipes();
 
         this.isLoading = false;
       } catch (error) {
@@ -114,10 +115,6 @@ export default {
         this.isLoading = false;
       }
     }
-  },
-
-  beforeDestroy() {
-    this.$eventBus.$off("sort-recipe-list");
   }
 };
 </script>
