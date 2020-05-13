@@ -100,8 +100,6 @@ export default {
 
       const slicedRecipeListLength = this.slicedRecipeList.length;
 
-      console.log(slicedRecipeListLength);
-
       const moreRecipes = this.recipeList.slice(
         slicedRecipeListLength,
         slicedRecipeListLength + 4
