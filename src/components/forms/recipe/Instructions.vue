@@ -4,15 +4,16 @@
 
     <p class="help-text">Please enter instructions in order</p>
 
-    <form @submit.prevent="addInnstruction" class="instructions-form">
+    <form @submit.prevent="addInstruction" class="instructions-form">
       <v-text-field
         v-model="instruction"
         append-icon="mdi-plus"
-        label="Enter Ingredient"
+        label="Enter instruction"
         required
         filled
-        @input="$v.instructions.$touch()"
-        @blur="$v.instructions.$touch()"
+        :error-messages="instructionErrors"
+        @input="$v.instruction.$touch()"
+        @blur="$v.instruction.$touch()"
       ></v-text-field>
     </form>
 
@@ -34,8 +35,14 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "instructions-field",
+
+  mixins: [validationMixin],
+
   props: {
     actionType: {
       type: String,
@@ -45,6 +52,13 @@ export default {
       type: Array
     }
   },
+
+  validations: {
+    instruction: {
+      required
+    }
+  },
+
   data() {
     return {
       instruction: "",
@@ -52,6 +66,20 @@ export default {
         this.actionType !== "add-recipe" ? this.recipeInstructions : []
     };
   },
+
+  computed: {
+    instructionErrors() {
+      const errors = [];
+
+      if (!this.$v.instruction.$dirty) return errors;
+
+      !this.$v.instruction.required &&
+        errors.push("Recipe instruction is required.");
+
+      return errors;
+    }
+  },
+
   methods: {
     addInstruction() {
       const { instruction, instructions } = this.$data;

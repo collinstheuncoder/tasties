@@ -9,7 +9,7 @@
       </div>
       <div v-else class="recipes">
         <router-link
-          v-for="recipe in recipeList"
+          v-for="recipe in slicedRecipeList"
           :to="generateRecipeLink(recipe.recipeType, recipe.id)"
           :key="recipe.id"
           class="recipe-link"
@@ -23,6 +23,11 @@
             <figcaption class="recipe-name">{{ recipe.name }}</figcaption>
           </figure>
         </router-link>
+        <div class="mx-auto my-3" v-show="hasMoreRecipes">
+          <v-btn text small color="#7cc9ad" @click="showMoreRecipes"
+            >View more</v-btn
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -31,6 +36,7 @@
 <script>
 export default {
   name: "profile-recipe-list",
+
   props: {
     isCurrentUser: {
       type: Boolean,
@@ -49,32 +55,37 @@ export default {
       required: true
     }
   },
+
   data() {
     return {
-      parentElementId: "uploaded-recipes"
+      parentElementId: "uploaded-recipes",
+      slicedRecipeList: [],
+      hasMoreRecipes: false
     };
   },
+
   computed: {
     emptyRecipeListMessage() {
       let message = "";
 
       if (this.recipeListType === "Uploaded") {
         message = `${
-          this.isCurrentUser ? "You" : this.profileFullname
-        } has not yet uploaded any recipe`;
+          this.isCurrentUser ? "You have" : `${this.profileFullname} has`
+        } not yet uploaded any recipe`;
       } else if (this.recipeListType === "Saved") {
         message = `${
-          this.isCurrentUser ? "You" : this.profileFullname
-        } does not have any saved recipe`;
+          this.isCurrentUser ? "You do" : `${this.profileFullname} does`
+        } not have any saved recipe`;
       } else {
         message = `${
-          this.isCurrentUser ? "You" : this.profileFullname
-        } does not have any favorited recipe`;
+          this.isCurrentUser ? "You do" : `${this.profileFullname} does`
+        } not have any favorited recipe`;
       }
 
       return message;
     }
   },
+
   methods: {
     generateRecipeLink(recipeTypes, recipeId) {
       const index = Math.floor(Math.random() * recipeTypes.length);
@@ -82,8 +93,26 @@ export default {
       const recipeType = encodeURI(recipeTypes[index]);
 
       return `/recipes/${recipeType}/${recipeId}`;
+    },
+
+    showMoreRecipes() {
+      if (!this.hasMoreRecipes) return;
+
+      const slicedRecipeListLength = this.slicedRecipeList.length;
+
+      console.log(slicedRecipeListLength);
+
+      const moreRecipes = this.recipeList.slice(
+        slicedRecipeListLength,
+        slicedRecipeListLength + 4
+      );
+
+      this.slicedRecipeList = [...this.slicedRecipeList, ...moreRecipes];
+      this.hasMoreRecipes =
+        this.recipeList.length > this.slicedRecipeList.length;
     }
   },
+
   created() {
     if (this.recipeListType === "Saved") {
       this.parentElementId = "saved-recipes";
@@ -92,6 +121,9 @@ export default {
     } else {
       this.parentElementId = "uploaded-recipes";
     }
+
+    this.slicedRecipeList = this.recipeList.slice(0, 4);
+    this.hasMoreRecipes = this.recipeList.length > this.slicedRecipeList.length;
   }
 };
 </script>

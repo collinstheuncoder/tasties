@@ -31,17 +31,17 @@ const mutations = {
 
   setUserUpdate: (
     state,
-    updateType = "current-user-update",
+    updateType = "current-user-content",
     updatedCurrentUserFields,
-    updatedUserToFollowFields
+    updatedFolloweeFields
   ) => {
-    if (updateType === "current-user-update") {
+    if (updateType === "current-user-content") {
       state.currentUser = { ...state.currentUser, ...updatedCurrentUserFields };
-    } else if (updateType === "user-to-follow-update") {
-      state.userById = { ...state.userById, ...updatedUserToFollowFields };
+    } else if (updateType === "follow") {
+      state.userById = { ...state.userById, ...updatedFolloweeFields };
     } else {
       state.currentUser = { ...state.currentUser, ...updatedCurrentUserFields };
-      state.userById = { ...state.userById, ...updatedUserToFollowFields };
+      state.userById = { ...state.userById, ...updatedFolloweeFields };
     }
   }
 };
@@ -126,23 +126,50 @@ const actions = {
     router.go(-1);
   },
 
-  followUserProfile: async (
-    _,
-    { followedBy, following, currentUserId, userId }
-  ) => {
-    const followedUserPromise = updateUser({ followedBy }, userId);
-    const currentUserPromise = updateUser({ following }, currentUserId);
+  followUserProfile: async ({ commit, getters }, { isFollowing }) => {
+    let updatedFolloweeFollowedByList;
+    let updatedCurrentUserFollowingList;
+
+    if (isFollowing) {
+      // Unfollow followee and update followedBy and following
+      // lists of followee and current user respctively
+      updatedFolloweeFollowedByList = getters.userById.followedBy.filter(
+        user => user.id !== getters.currentUser.id
+      );
+
+      updatedCurrentUserFollowingList = getters.currentUser.following.filter(
+        user => user.id !== getters.userById.id
+      );
+    } else {
+      // Follow followee and update followedBy and following
+      // lists of followee and current user respctively
+      updatedFolloweeFollowedByList = [
+        ...getters.userById.followedBy,
+        getters.currentUser
+      ];
+      updatedCurrentUserFollowingList = [
+        ...getters.currentUser.following,
+        getters.userById
+      ];
+    }
+
+    const followedUserPromise = updateUser(
+      { followedBy: updatedFolloweeFollowedByList.map(user => user.id) },
+      getters.userById.id
+    );
+    const currentUserPromise = updateUser(
+      { following: updatedCurrentUserFollowingList.map(user => user.id) },
+      getters.currentUser.id
+    );
 
     await Promise.all([followedUserPromise, currentUserPromise]);
 
-    // if (followedUserDoc.exists && currentUserDoc.exists) {
-    //   commit(
-    //     "setUserUpdate",
-    //     "current-and-user-to-follow-update",
-    //     { following },
-    //     { followedBy }
-    //   );
-    // }
+    commit(
+      "setUserUpdate",
+      "follow-user",
+      { following: updatedCurrentUserFollowingList },
+      { followedBy: updatedFolloweeFollowedByList }
+    );
   },
 
   resetUserPassword: async (_, { email }) => {

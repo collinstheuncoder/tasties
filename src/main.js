@@ -1,6 +1,7 @@
 import Vue from "vue";
 import firebase from "firebase";
 import SocialSharing from "vue-social-sharing";
+import InfiniteLoading from "vue-infinite-loading";
 
 import App from "./App.vue";
 
@@ -14,6 +15,7 @@ import "./assets/styles/vendor/materialdesignicons/css/materialdesignicons.min.c
 import "./registerServiceWorker";
 
 Vue.use(SocialSharing);
+Vue.use(InfiniteLoading);
 
 Vue.config.productionTip = false;
 

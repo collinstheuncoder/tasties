@@ -34,9 +34,9 @@ export const fetchRecipes = async () =>
 // Fetch more recipes from db
 export const fetchMoreRecipes = async lastItem =>
   await recipesRef
-    .orderBy("createdAt", "desc")
-    .startAfter(lastItem.createdAt)
-    .limit()
+    .orderBy("addedAt", "desc")
+    .startAfter(lastItem.addedAt)
+    .limit(4)
     .get();
 
 export const recipesCollectionSize = async () => await recipesRef.get();

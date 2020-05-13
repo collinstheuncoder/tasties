@@ -27,12 +27,13 @@ const state = {
 const getters = {
   recipeList: state => state.recipeList,
   recipeListByType: state => state.recipeListByType,
+  recipeListTotalSize: state => state.recipeListTotalSize,
   recipe: state => state.recipe,
   comment: state => state.comment
 };
 
 const mutations = {
-  setAllRecipes: (state, recipes, size) => {
+  setAllRecipes: (state, { recipes, size }) => {
     state.recipeList = recipes;
     state.recipeListTotalSize = size;
   },
@@ -68,7 +69,7 @@ const actions = {
 
     sessionStorage.setItem("recipe-list", JSON.stringify(recipes));
 
-    commit("setAllRecipes", recipes, size);
+    commit("setAllRecipes", { recipes, size });
   },
 
   getMoreRecipes: async ({ commit, getters }) => {
@@ -81,9 +82,17 @@ const actions = {
       id: doc.id
     }));
 
-    sessionStorage.setItem("recipe-list", JSON.stringify(recipes));
+    const storedRecipeList = JSON.parse(sessionStorage.getItem("recipe-list"));
 
-    commit("setAllRecipes", recipes);
+    sessionStorage.setItem(
+      "recipe-list",
+      JSON.stringify([...storedRecipeList, ...recipes])
+    );
+
+    commit("setAllRecipes", {
+      recipes: [...storedRecipeList, ...recipes],
+      size: getters.recipeListTotalSize
+    });
   },
 
   getRecipesByType: async ({ commit }, { recipeType }) => {

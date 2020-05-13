@@ -36,7 +36,7 @@
                     />
                   </v-dialog>
                   <v-tooltip
-                    right
+                    bottom
                     v-if="currentUser && userById.id !== currentUser.id"
                   >
                     <template v-slot:activator="{ on }">
@@ -141,7 +141,8 @@ export default {
       dialog: false,
       isFollowing: false,
       isLoading: false,
-      error: null
+      error: null,
+      followError: null
     };
   },
 
@@ -189,37 +190,15 @@ export default {
       this.dialog = false;
     },
 
-    followUser() {
-      if (this.isAuthenticated && this.currentUser) {
-        const currentUserId = this.currentUser.id;
-        const currentProfile = this.userById;
+    async followUser() {
+      if (!this.isAuthenticated) return;
 
-        let updatedFollowedByList;
-        let updatedFollowingList;
+      try {
+        await this.followUserProfile(this.isFollowing);
 
-        if (this.isFollowing) {
-          this.isFollowing = !this.isFollowing;
-
-          updatedFollowedByList = currentProfile.followedBy.filter(
-            userId => userId !== currentUserId
-          );
-
-          updatedFollowingList = this.currentUser.following.filter(
-            userId => userId !== currentProfile.id
-          );
-        } else {
-          this.isFollowing = !this.isFollowing;
-
-          updatedFollowedByList = [...currentProfile.followedBy, currentUserId];
-          updatedFollowingList = [...this.currentUser.following, this.userId];
-        }
-
-        this.followUserProfile({
-          userId: this.userId,
-          currentUserId,
-          following: updatedFollowingList,
-          followedBy: updatedFollowedByList
-        });
+        this.isFollowing = !this.isFollowing;
+      } catch (error) {
+        this.followError = error;
       }
     }
   },
@@ -238,7 +217,9 @@ export default {
     }
 
     if (this.currentUser && this.userById) {
-      this.isFollowing = this.userById.followedBy.includes(this.currentUser.id);
+      this.isFollowing = this.userById.followedBy
+        .map(follower => follower.id)
+        .includes(this.currentUser.id);
     }
   }
 };

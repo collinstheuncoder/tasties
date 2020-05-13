@@ -6,8 +6,8 @@
     filled
     label="Recipe Difficulty"
     @input="selectRecipeDifficulty"
-    @change="$v.select.$touch()"
-    @blur="$v.select.$touch()"
+    @change="$v.difficulty.$touch()"
+    @blur="$v.difficulty.$touch()"
   ></v-select>
 </template>
 

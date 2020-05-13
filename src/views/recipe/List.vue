@@ -17,6 +17,10 @@
         <section v-else class="recipe-list-grid">
           <sort-recipe-list @sortRecipeListBy="sortRecipeList" />
           <recipe-list class="recipe-list" :recipe-list="sortedRecipeList" />
+          <br />
+          <infinite-loading @infinite="loadMoreRecipes">
+            <spinner slot="spinner" message="Loading More Recipes" :size="35" />
+          </infinite-loading>
         </section>
       </div>
     </div>
@@ -53,12 +57,16 @@ export default {
       ],
       sortBy: "latest",
       isLoading: false,
+      isLoadingMore: false,
       error: null
     };
   },
 
   computed: {
-    ...mapGetters({ recipeList: "recipes/recipeList" }),
+    ...mapGetters({
+      recipeList: "recipes/recipeList",
+      recipeListTotalSize: "recipes/recipeListTotalSize"
+    }),
 
     sortedRecipeList() {
       let sortedList;
@@ -95,10 +103,32 @@ export default {
   },
 
   methods: {
-    ...mapActions({ getRecipes: "recipes/getRecipes" }),
+    ...mapActions({
+      getRecipes: "recipes/getRecipes",
+      getMoreRecipes: "recipes/getMoreRecipes"
+    }),
 
     sortRecipeList(sortBy) {
       this.sortBy = sortBy;
+    },
+
+    async loadMoreRecipes($state) {
+      if (this.recipeListTotalSize === this.recipeList.length) {
+        $state.complete();
+      }
+
+      this.isLoadingMore = true;
+
+      try {
+        await this.getMoreRecipes();
+
+        $state.loaded();
+        this.error = null;
+        this.isLoadingMore = false;
+      } catch (error) {
+        this.error = error;
+        this.isLoadingMore = false;
+      }
     }
   },
 

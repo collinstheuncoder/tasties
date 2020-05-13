@@ -57,7 +57,6 @@ export default {
 .recipe {
   &-types {
     margin: 1rem 0;
-    display: none;
 
     &-thumbnails {
       display: grid;

@@ -9,6 +9,7 @@
         label="Enter Ingredient"
         required
         filled
+        :error-messages="ingredientErrors"
         @input="$v.ingredient.$touch()"
         @blur="$v.ingredient.$touch()"
       ></v-text-field>
@@ -32,8 +33,14 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "ingredients-field",
+
+  mixins: [validationMixin],
+
   props: {
     actionType: {
       type: String,
@@ -43,6 +50,13 @@ export default {
       type: Array
     }
   },
+
+  validations: {
+    ingredient: {
+      required
+    }
+  },
+
   data() {
     return {
       ingredient: "",
@@ -50,6 +64,20 @@ export default {
         this.actionType !== "add-recipe" ? this.recipeIngredients : []
     };
   },
+
+  computed: {
+    ingredientErrors() {
+      const errors = [];
+
+      if (!this.$v.ingredient.$dirty) return errors;
+
+      !this.$v.ingredient.required &&
+        errors.push("Recipe ingredient is required.");
+
+      return errors;
+    }
+  },
+
   methods: {
     addIngredient() {
       const { ingredient, ingredients } = this.$data;
