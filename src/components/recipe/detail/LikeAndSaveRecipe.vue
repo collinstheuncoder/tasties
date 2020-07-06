@@ -39,6 +39,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { updateCurrentlyStoredRecipe } from "@/helpers";
+
 export default {
   name: "like-and-save-recipe",
   data() {
@@ -71,39 +73,55 @@ export default {
       saveRecipe: "recipes/saveRecipe"
     }),
     async likeRecipeItem() {
-      if (this.isAuthenticated) {
-        this.isLoading = true;
+      if (!this.isAuthenticated) return;
 
-        try {
-          await this.likeRecipe({
-            userId: this.currentUser.id
-          });
+      this.isLoading = true;
 
-          this.isLiked = !this.isLiked;
-          this.error = null;
-          this.isLoading.likeRecipe = false;
-        } catch (error) {
-          this.error = error;
-          this.isLoading.likeRecipe = false;
-        }
+      try {
+        await this.likeRecipe({
+          userId: this.currentUser.id
+        });
+
+        updateCurrentlyStoredRecipe({
+          likedBy: this.isLiked
+            ? this.recipe.likedBy.filter(
+                userId => userId !== this.currentUser.id
+              )
+            : [...this.recipe.likedBy, this.currentUser.id]
+        });
+
+        this.isLiked = !this.isLiked;
+        this.error = null;
+        this.isLoading.likeRecipe = false;
+      } catch (error) {
+        this.error = error;
+        this.isLoading.likeRecipe = false;
       }
     },
     async saveRecipeItem() {
-      if (this.isAuthenticated) {
-        this.isLoading = true;
+      if (!this.isAuthenticated) return;
 
-        try {
-          await this.saveRecipe({
-            userId: this.currentUser.id
-          });
+      this.isLoading = true;
 
-          this.isSaved = !this.isSaved;
-          this.error = null;
-          this.isLoading.saveRecipe = false;
-        } catch (error) {
-          this.error = error;
-          this.isLoading.saveRecipe = false;
-        }
+      try {
+        await this.saveRecipe({
+          userId: this.currentUser.id
+        });
+
+        updateCurrentlyStoredRecipe({
+          bookmarkedBy: this.isSaved
+            ? this.recipe.bookmarkedBy.filter(
+                userId => userId !== this.currentUser.id
+              )
+            : [...this.recipe.bookmarkedBy, this.currentUser.id]
+        });
+
+        this.isSaved = !this.isSaved;
+        this.error = null;
+        this.isLoading.saveRecipe = false;
+      } catch (error) {
+        this.error = error;
+        this.isLoading.saveRecipe = false;
       }
     }
   },

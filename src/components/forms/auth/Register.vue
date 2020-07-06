@@ -252,7 +252,6 @@ export default {
 .error-message {
   font-size: 0.85rem;
   color: $error-color;
-  margin-top: 0.5rem;
-  margin-bottom: 0;
+  margin: 0 0 0.5rem;
 }
 </style>

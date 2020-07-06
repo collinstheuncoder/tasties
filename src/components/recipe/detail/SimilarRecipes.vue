@@ -1,6 +1,7 @@
 <template>
   <div class="similar-recipes-list">
     <h3 class="title">Similar Recipes</h3>
+    TBD
   </div>
 </template>
 

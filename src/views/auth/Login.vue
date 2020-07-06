@@ -90,6 +90,10 @@ export default {
 
     &-form {
       flex-basis: 55%;
+
+      @include mediumDevices {
+        width: 55%;
+      }
     }
   }
 }

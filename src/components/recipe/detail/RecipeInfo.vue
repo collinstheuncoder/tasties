@@ -10,11 +10,11 @@
     </div>
     <div class="info">
       <p class="info-label">Prep Time</p>
-      <p class="info-value">{{ convertMinToHrs(recipe.prepTime) }}</p>
+      <p class="info-value">{{ formatTime(recipe.prepTime) }}</p>
     </div>
     <div class="info">
       <p class="info-label">Cooking Time</p>
-      <p class="info-value">{{ convertMinToHrs(recipe.cookingTime) }}</p>
+      <p class="info-value">{{ formatTime(recipe.cookingTime) }}</p>
     </div>
     <div class="info">
       <p class="info-label">Total Time</p>
@@ -37,7 +37,7 @@ export default {
       const totalMinutes =
         Number(this.recipe.prepTime) + Number(this.recipe.cookingTime);
 
-      return this.convertMinToHrs(totalMinutes);
+      return this.formatTime(totalMinutes);
     },
     difficulty() {
       const firstLetter = this.recipe.difficulty[0].toUpperCase();
@@ -46,19 +46,14 @@ export default {
     }
   },
   methods: {
-    convertMinToHrs(time) {
-      let totalTimeMsg = "";
+    formatTime(timeInMin) {
+      if (timeInMin === 0) return "-";
+      if (timeInMin < 60) return `${timeInMin} min`;
 
-      if (time < 60) {
-        totalTimeMsg = `${time} min`;
-      } else {
-        const hrs = Math.floor(time / 60);
-        const min = time % 60;
+      const hrs = Math.floor(timeInMin / 60);
+      const min = timeInMin % 60;
 
-        totalTimeMsg = `${hrs} hr${hrs > 1 ? "s" : ""} ${min} min`;
-      }
-
-      return totalTimeMsg;
+      return `${hrs} hr${hrs > 1 ? "s" : ""} ${min === 0 ? "" : `${min} min`}`;
     }
   }
 };

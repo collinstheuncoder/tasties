@@ -203,6 +203,7 @@ export default {
     text-align: center;
     margin: 0.5rem 0 0.5rem;
     font-size: 1.25rem;
+    color: $app-main-color;
 
     @include mediumDevices {
       margin: 1.5rem 0 0.75rem;
@@ -226,7 +227,6 @@ export default {
     margin: 0 0 0.5rem;
 
     &-value {
-      color: $app-main-color;
       font-weight: 600;
     }
   }

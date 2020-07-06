@@ -15,11 +15,7 @@
         </v-card-text>
         <v-card-actions class="action-btns">
           <v-spacer></v-spacer>
-          <v-btn
-            color="green darken-1"
-            @click="dialog = false"
-            class="action-btn"
-          >
+          <v-btn color="#04b4d4" @click="dialog = false" class="action-btn">
             Cancel
           </v-btn>
 
@@ -30,7 +26,7 @@
             @submit.prevent="deleteAccount"
             class="action-btn"
           >
-            Delete Account
+            Confirm
           </v-btn>
         </v-card-actions>
       </v-card>

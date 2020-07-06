@@ -101,3 +101,14 @@ export function calculateRecipeRating(ratingList) {
 
   return rating;
 }
+
+export function updateCurrentlyStoredRecipe(updatedFields) {
+  const storedRecipe = JSON.parse(sessionStorage.getItem("recipe"));
+  
+  const updatedRecipe = {
+    ...storedRecipe,
+    ...updatedFields
+  };
+
+  sessionStorage.setItem("recipe", JSON.stringify(updatedRecipe));
+}

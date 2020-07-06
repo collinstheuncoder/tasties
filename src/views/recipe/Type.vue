@@ -115,7 +115,7 @@ export default {
 
     &--loading {
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
     }
 
     @include mediumDevices {
@@ -129,6 +129,6 @@ export default {
 }
 
 .spinner {
-  margin-top: 10.5rem;
+  margin: 3.5rem auto;
 }
 </style>

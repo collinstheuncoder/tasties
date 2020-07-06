@@ -106,4 +106,12 @@ export default {
   display: flex;
   margin-bottom: 2rem;
 }
+
+// .recipe-types {
+//   display: none;
+
+//   @include mediumDevices {
+//     display: block;
+//   }
+// }
 </style>

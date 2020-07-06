@@ -5,13 +5,29 @@
       :value="selectedRating"
       size="30"
       half-increments
+      hover
       @input="submitRating($event)"
     ></v-rating>
+    <v-snackbar :color="snackbarColor" v-model="snackbar">
+      {{ saveRatingNotification }}
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          :color="snackbarColor"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+
+import { updateCurrentlyStoredRecipe } from "@/helpers";
 
 export default {
   name: "rate-recipe",
@@ -25,7 +41,12 @@ export default {
 
   data() {
     return {
-      selectedRating: 0
+      selectedRating: 0,
+      snackbar: false,
+      snackbarColor: "",
+      hasSavedRating: false,
+      hasFailedSavingRating: false,
+      error: null
     };
   },
 
@@ -33,19 +54,44 @@ export default {
     ...mapGetters({
       isAuthenticated: "auth/isAuthenticated",
       currentUser: "users/currentUser"
-    })
+    }),
+    saveRatingNotification() {
+      let message;
+
+      if (this.hasSavedRating) message = "Saved Rating!";
+      if (this.hasFailedSavingRating) message = this.error;
+
+      return message;
+    }
   },
 
   methods: {
     ...mapActions({ rateRecipe: "recipes/rateRecipe" }),
-    submitRating($rating) {
+    async submitRating($rating) {
+      if (!this.isAuthenticated) return;
+
       this.selectedRating = $rating;
 
-      if (this.isAuthenticated) {
-        this.rateRecipe({
+      try {
+        await this.rateRecipe({
           selectedRating: $rating,
           userId: this.currentUser.id
         });
+
+        updateCurrentlyStoredRecipe({
+          rating: $rating
+        });
+
+        this.snackbar = true;
+        this.snackbarColor = "success";
+        this.hasSavedRating = true;
+        this.hasFailedSavingRating = false;
+        this.error = null;
+      } catch (error) {
+        this.snackbar = true;
+        this.snackbarColor = "error";
+        this.hasFailedSavingRating = true;
+        this.error = error;
       }
     }
   },

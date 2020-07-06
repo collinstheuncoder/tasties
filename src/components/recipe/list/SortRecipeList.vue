@@ -59,11 +59,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 0 1rem;
-
-  @include mediumDevices {
-    margin: 1rem 0 2rem;
-  }
+  margin: 1rem 0 2rem;
 
   &-title {
     font-size: 1rem;

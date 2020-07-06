@@ -25,7 +25,6 @@ const checkUsernameAvailability = (req, res) => {
     .where("username", "==", req.query.username)
     .get()
     .then(doc => {
-      console.log(doc);
       return res.status(200).send(!doc.exists);
     })
     .catch(error => res.status(500).send(error));
