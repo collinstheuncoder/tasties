@@ -118,10 +118,7 @@ export default {
     },
 
     async submitForm() {
-      console.log(this.currentUser);
-
       if (this.currentUser) {
-        console.log(this.currentUser);
         this.isLoading = true;
 
         try {
