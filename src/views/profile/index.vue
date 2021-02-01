@@ -106,7 +106,7 @@
               />
             </section>
           </v-card>
-          <account-actions />
+          <account-actions v-show="belongsToCurrentUser" />
         </div>
       </template>
     </div>
@@ -155,6 +155,10 @@ export default {
 
     linkToEdit() {
       return `${this.$route.fullPath}/edit`;
+    },
+
+    belongsToCurrentUser() {
+      return this.currentUser.id === this.userById.id;
     }
   },
 

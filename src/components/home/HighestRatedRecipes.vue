@@ -30,7 +30,8 @@
             >
           </v-card-title>
           <p class="recipe-rating">
-            <em
+            <em v-if="recipe.rating === 0">Not yet rated</em>
+            <em v-else
               >Rated {{ recipe.rating }}/5 by {{ recipe.ratedBy.length }}
               {{ recipe.ratedBy.length === 1 ? "person" : "people" }}</em
             >

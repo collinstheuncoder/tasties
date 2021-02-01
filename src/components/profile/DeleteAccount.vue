@@ -23,7 +23,7 @@
             color="red darken-1"
             :loading="isLoading"
             :disabled="isLoading"
-            @submit.prevent="deleteAccount"
+            @click="deleteAccount"
             class="action-btn"
           >
             Confirm
@@ -48,12 +48,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isAuthenticated: "auth/isAuthenticated"
+      isAuthenticated: "auth/isAuthenticated",
+      currentUser: "users/currentUser"
     })
   },
   methods: {
     ...mapActions({
-      deleteUserAccount: "users/deleteUserAccount"
+      deleteUserAccount: "users/deleteUserAccount",
+      logout: "auth/logout"
     }),
 
     async deleteAccount() {
@@ -61,7 +63,11 @@ export default {
         this.isLoading = true;
 
         try {
-          await this.deleteUserAccount({ router: this.$router });
+          await this.deleteUserAccount({
+            userId: this.currentUser.id
+          });
+
+          this.logout({ router: this.$router });
 
           this.dialog = false;
           this.isLoading = false;

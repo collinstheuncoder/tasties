@@ -32,7 +32,7 @@ export default {
 .heading {
   color: $app-secondary-color;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .btns {

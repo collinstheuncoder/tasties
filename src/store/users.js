@@ -1,6 +1,7 @@
 import {
   fetchUserById,
   updateUser,
+  deleteUser,
   fetchRecipesSavedBy,
   fetchRecipesFavoritedBy,
   fetchRecipesUploadedBy
@@ -180,10 +181,8 @@ const actions = {
     await updatePassword(password);
   },
 
-  deleteUserAccount: async (_, { router }) => {
-    await deleteAccount();
-
-    router.push("/");
+  deleteUserAccount: async (_, { userId }) => {
+    await Promise.all([deleteUser(userId), deleteAccount()]);
   }
 };
 

@@ -21,10 +21,11 @@ async function saveUserToDb(user, commit, email, fullname, username) {
     imageUrl: "",
     following: [],
     followedBy: [],
+    role: "basic",
     createdAt: new Date().toLocaleDateString()
   };
 
-  await addUser(user);
+  return addUser(user);
 }
 
 const state = {
