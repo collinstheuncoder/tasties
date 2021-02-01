@@ -286,6 +286,10 @@ export default {
     },
 
     async submitNewRecipe() {
+      this.$v.$touch();
+
+      if (this.$v.$invalid) return;
+
       if (this.isAuthenticated && this.currentUser) {
         this.newRecipe = {
           ...this.newRecipe,
@@ -327,6 +331,10 @@ export default {
     },
 
     async submitUpdatedRecipe() {
+      this.$v.$touch();
+
+      if (this.$v.$invalid) return;
+
       if (
         this.isAuthenticated &&
         this.recipeToEdit.addedBy.id === this.currentUser.id

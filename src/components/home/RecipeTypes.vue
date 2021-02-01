@@ -88,6 +88,7 @@ export default {
 
     &--large-screens {
       display: none;
+      background-color: #efefef;
 
       @include largeDevices {
         display: block;
@@ -116,6 +117,13 @@ export default {
     margin-top: 0.5rem;
     text-transform: uppercase;
     font-weight: 700;
+  }
+}
+
+.v-slide-group__next,
+.v-slide-group__prev {
+  &:hover {
+    color: $app-main-color;
   }
 }
 

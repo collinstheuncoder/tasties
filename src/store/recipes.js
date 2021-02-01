@@ -9,7 +9,8 @@ import {
   updateRecipe,
   updateRecipes,
   addComment,
-  deleteRecipe
+  deleteRecipe,
+  deleteComment
 } from "../firebase/db";
 import { uploadImage } from "../firebase/storage";
 
@@ -53,6 +54,12 @@ const mutations = {
     state.recipe = {
       ...state.recipe,
       comments: [...state.recipe.comments, newComment]
+    };
+  },
+  deleteSelectedComment: (state, commentId) => {
+    state.recipe = {
+      ...state.recipe,
+      comments: state.comments.filter(comment => comment.id !== commentId)
     };
   }
 };
@@ -159,7 +166,6 @@ const actions = {
     router.go(-1);
   },
 
-  // Bookmark recipe
   saveRecipe: async ({ getters }, { userId }) => {
     const {
       recipe: { bookmarkedBy, id }
@@ -301,6 +307,12 @@ const actions = {
     // await updateUser({}, getters.currentUser.id);
 
     router("/recipes");
+  },
+
+  deleteSingleComment: async ({ commit }, { commentId }) => {
+    await deleteComment(commentId);
+
+    commit("deleteSelectedComment", commentId);
   }
 };
 

@@ -7,6 +7,7 @@
       required
       @input="$v.fullname.$touch()"
       @blur="$v.fullname.$touch()"
+      class="input-field"
     ></v-text-field>
 
     <v-text-field
@@ -17,6 +18,7 @@
       required
       @input="$v.username.$touch()"
       @blur="$v.username.$touch()"
+      class="input-field"
     ></v-text-field>
 
     <v-text-field
@@ -27,6 +29,7 @@
       required
       @input="$v.email.$touch()"
       @blur="$v.email.$touch()"
+      class="input-field"
     ></v-text-field>
 
     <v-text-field
@@ -40,6 +43,7 @@
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
       @click:append="showPassword = !showPassword"
+      class="input-field"
     ></v-text-field>
 
     <v-text-field
@@ -52,6 +56,7 @@
       @input="$v.confirmPassword.$touch()"
       @blur="$v.confirmPassword.$touch()"
       @click:append="showConfirmPassword = !showConfirmPassword"
+      class="input-field"
     ></v-text-field>
 
     <p v-show="error" class="error-message">{{ error }}</p>
@@ -186,17 +191,17 @@ export default {
   methods: {
     ...mapActions({ register: "auth/register" }),
 
-    async checkForUsernameAvailabilty() {
-      const isAvailable = await (
-        await fetch(
-          `${process.env.VUE_APP_CHECK_USERNAME_URL}?username=${this.username}`
-        )
-      ).json();
+    // async checkForUsernameAvailabilty() {
+    //   const isAvailable = await (
+    //     await fetch(
+    //       `${process.env.VUE_APP_CHECK_USERNAME_URL}?username=${this.username}`
+    //     )
+    //   ).json();
 
-      console.log(isAvailable);
+    //   console.log(isAvailable);
 
-      this.isLoading = false;
-    },
+    //   this.isLoading = false;
+    // },
 
     clearForm() {
       this.$v.$reset();
@@ -212,7 +217,7 @@ export default {
       this.$v.$touch();
       this.isLoading = true;
 
-      this.checkForUsernameAvailabilty();
+      // this.checkForUsernameAvailabilty();
 
       try {
         await this.register({
@@ -241,6 +246,10 @@ export default {
 .form {
   flex-basis: 55%;
   padding: 1rem;
+}
+
+.input-field {
+  margin-bottom: 1rem;
 }
 
 .button {

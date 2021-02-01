@@ -2,6 +2,7 @@
   <v-footer class="footer">
     <v-card flat tile width="100%" class="footer-card text-center">
       <v-card-text>
+        <p class="footer-share-text">Share Via</p>
         <social-sharing
           url="https://tasties-5b8b0.firebaseapp.com/"
           inline-template
@@ -61,6 +62,13 @@ export default {
   &-card {
     background-color: $app-main-color !important;
     padding: 1.5rem 0;
+  }
+
+  &-share-text {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
   }
 }
 

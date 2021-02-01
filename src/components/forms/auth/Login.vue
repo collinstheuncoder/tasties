@@ -8,6 +8,7 @@
       required
       @input="$v.email.$touch()"
       @blur="$v.email.$touch()"
+      class="input-field"
     ></v-text-field>
 
     <v-text-field
@@ -20,6 +21,7 @@
       @input="$v.password.$touch()"
       @blur="$v.password.$touch()"
       @click:append="showPassword = !showPassword"
+      class="input-field"
     ></v-text-field>
 
     <p v-show="error" class="error-message">{{ error }}</p>
@@ -127,6 +129,10 @@ export default {
 .form {
   flex-basis: 55%;
   padding: 1rem;
+}
+
+.input-field {
+  margin-bottom: 1rem;
 }
 
 .button {

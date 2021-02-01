@@ -36,11 +36,24 @@
       </p>
     </div>
     <p class="comment-body">{{ comment.commentBody }}</p>
+    <v-btn
+      v-show="shouldDisplayDeleteIcon"
+      @click="deleteComment"
+      class="ma-2 comment-delete-icon"
+      text
+      icon
+      color="red lighten-2"
+    >
+      <v-icon>mdi-delete-circle</v-icon>
+    </v-btn>
   </article>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
+
+import { updateCurrentlyStoredRecipe } from "@/helpers";
 
 export default {
   name: "comment",
@@ -50,7 +63,17 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      isLoading: false,
+      error: null
+    };
+  },
   computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated",
+      currentUser: "users/currentUser"
+    }),
     timeSinceRecipeAddition() {
       const formattedDate = date => new Date(date).toLocaleDateString();
 
@@ -58,6 +81,41 @@ export default {
         formattedDate(this.comment.commentedAt),
         "MM/DD/YYYY"
       ).fromNow();
+    },
+    shouldDisplayDeleteIcon() {
+      return (
+        this.currentUser &&
+        (this.currentUser.id === this.comment.commentedBy.id ||
+          this.currentUser.role === "admin")
+      );
+    }
+  },
+  methods: {
+    ...mapActions({
+      deleteSingleComment: "recipes/deleteSingleComment"
+    }),
+    async deleteComment() {
+      if (!this.isAuthenticated) return;
+
+      this.isLoading = true;
+
+      try {
+        await this.deleteSingleComment({
+          commentId: this.comment.id
+        });
+
+        updateCurrentlyStoredRecipe({
+          comments: this.recipe.comments.filter(
+            comment => comment.id !== this.comment.id
+          )
+        });
+
+        this.error = null;
+        this.isLoading = false;
+      } catch (error) {
+        this.error = error;
+        this.isLoading = false;
+      }
     }
   }
 };
@@ -70,6 +128,7 @@ export default {
   background-color: lighten($app-main-color, 50%);
   padding: 1rem;
   margin-bottom: 0.5rem;
+  position: relative;
 
   &:last-of-type {
     margin-bottom: 0;
@@ -82,6 +141,12 @@ export default {
 
   &-body {
     font-size: 1rem;
+  }
+
+  &-delete-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 
